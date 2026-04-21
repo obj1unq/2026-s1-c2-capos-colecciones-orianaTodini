@@ -1,0 +1,20 @@
+  import capos.* 
+
+describe " Rolando Coleccionando artefactos " {
+    test " Rolando encuentra un artefacto" { // caso positivo 
+        rolando.encuentraArtefacto(espadaDelDestino) 
+        // assert.equals(1, rolando.tamañoMochila())
+        assert.equals(#{espadaDelDestino},rolando.artefactos())
+        // assert.that(rolando.artefactos().contains(espadaDelDestino))
+    }
+    test "Rolando no recolecta un artefacto  " { // caso negativo
+        rolando.capacidad(0)
+        assert.throwsException({ rolando.encuentraArtefacto(espadaDelDestino) })
+    }
+}
+
+    /* si el metodo no hace nada en vez de tirar error 
+     test "Rolando no recolecta un artefacto  " { caso negativo
+        rolando.capacidad(0)
+        rolando.encuentraArtefacto(espadaDelDesino)
+        assert.equals(0, rolando.tamañoMochila()) */ 

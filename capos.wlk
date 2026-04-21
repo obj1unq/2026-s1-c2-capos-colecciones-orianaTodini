@@ -1,8 +1,19 @@
 object rolando {
- const artefactos = [] 
+ const artefactos = #{}
  var capacidadMaxima= 2
- method mochila() {
+ var castilloActual = castilloDePiedra
+
+ method artefactos() {
    return artefactos 
+ }
+ method castilloActual(_castillo) {
+   castilloActual= _castillo  
+ }
+ method castilloActual() {
+   return castilloActual
+ }
+ method tamañoMochila() {
+   return artefactos.size()
  }
  method encuentraArtefacto(artefacto) {
    self.recolectarArtefacto(artefacto)
@@ -17,5 +28,43 @@ method recolectarArtefacto(artefacto) {
  method capacidad(_capacidad){
     capacidadMaxima= _capacidad
  }
+ method llegarA(castilloActual) {
+   castilloActual.guardarArtefactos(artefactos)
+   artefactos.clear()
+ }
+ method artefactosEnPosecion() {
+   return artefactos + castilloActual.artefactos()
+ }
+ method hayArtefacto(artefacto) {
+   return artefactos.find(artefacto)
+ }
+
+}
+object castilloDePiedra {
+  const inventario = #{}
+  method guardarArtefactos(mochila) {
+     inventario.addAll(mochila)
+  } 
+  method inventario() {
+    return inventario 
+  }
+}
+ 
+
+
+
+
+
+
+
+
+object espadaDelDestino {
+}
+object libroDeHechizos {
+}
+object collarDivino {
+}
+
+object armaduraDeAceroValyrio {
 
 }
