@@ -18,3 +18,7 @@ describe " Rolando Coleccionando artefactos " {
         rolando.capacidad(0)
         rolando.encuentraArtefacto(espadaDelDesino)
         assert.equals(0, rolando.tamañoMochila()) */ 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3f3624b870e00cabcabb041344d8b8240ce02a23

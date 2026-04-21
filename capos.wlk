@@ -2,7 +2,7 @@ object rolando {
  const artefactos = #{}
  var capacidadMaxima= 2
  var castilloActual = castilloDePiedra
-
+ var hogar = castilloDePiedra
  method artefactos() {
    return artefactos 
  }
@@ -28,12 +28,12 @@ method recolectarArtefacto(artefacto) {
  method capacidad(_capacidad){
     capacidadMaxima= _capacidad
  }
- method llegarA(castilloActual) {
-   castilloActual.guardarArtefactos(artefactos)
+ method llegarA(hogar){ 
+   hogar.guardarArtefactos(artefactos)
    artefactos.clear()
  }
  method artefactosEnPosecion() {
-   return artefactos + castilloActual.artefactos()
+   return artefactos + hogar.artefactos()
  }
  method hayArtefacto(artefacto) {
    return artefactos.find(artefacto)
