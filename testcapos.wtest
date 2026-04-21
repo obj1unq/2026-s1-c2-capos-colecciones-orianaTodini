@@ -6,19 +6,92 @@ describe " Rolando Coleccionando artefactos " {
         // assert.equals(1, rolando.tamañoMochila())
         assert.equals(#{espadaDelDestino},rolando.artefactos())
         // assert.that(rolando.artefactos().contains(espadaDelDestino))
+        rolando.encuentraArtefacto(libroDeHechizos) 
+        // assert.equals(2, rolando.tamañoMochila())
+        assert.equals(#{espadaDelDestino, libroDeHechizos},rolando.artefactos())
+        // assert.that(rolando.artefactos().contains(espadaDelDestino))
+        assert.throwsException({ rolando.encuentraArtefacto(collarDivino) })
     }
+    }
+
     test "Rolando no recolecta un artefacto  " { // caso negativo
         rolando.capacidad(0)
         assert.throwsException({ rolando.encuentraArtefacto(espadaDelDestino) })
     }
-}
+
 
     /* si el metodo no hace nada en vez de tirar error 
      test "Rolando no recolecta un artefacto  " { caso negativo
         rolando.capacidad(0)
         rolando.encuentraArtefacto(espadaDelDesino)
         assert.equals(0, rolando.tamañoMochila()) */ 
-<<<<<<< HEAD
-=======
+describe "castillo de piedra " {
+  test "el castillo de piedra guarda los artefactos que le da rolando" {
+    rolando.encuentraArtefacto(espadaDelDestino)
+    assert.equals(#{espadaDelDestino}, rolando.artefactos())
+    rolando.encuentraArtefacto(libroDeHechizos)
+    assert.equals(#{espadaDelDestino, libroDeHechizos}, rolando.artefactos())
+    rolando.castilloActual(castilloDePiedra)
+    assert.equals(castilloDePiedra, rolando.castilloActual())
+    rolando.llegarA()
+    assert.equals(#{espadaDelDestino,libroDeHechizos}, castilloDePiedra.inventario())
+    assert.equals(#{},rolando.artefactos())
+    rolando.encuentraArtefacto(collarDivino)
+    assert.equals(#{collarDivino}, rolando.artefactos())
+    rolando.llegarA()
+    assert.equals(#{espadaDelDestino,libroDeHechizos,collarDivino}, castilloDePiedra.inventario())
+  }
+  test "saber historial de los encuentros de los artefactos"{
+    assert.equals([], rolando.historialDeArtefactos())
+    rolando.encuentraArtefacto(espadaDelDestino)
+    assert.equals(#{espadaDelDestino}, rolando.artefactos())
+    rolando.encuentraArtefacto(libroDeHechizos)
+    assert.equals(#{espadaDelDestino, libroDeHechizos}, rolando.artefactos())
+    assert.throwsException({ rolando.encuentraArtefacto(collarDivino) })
+    rolando.castilloActual(castilloDePiedra)
+    rolando.llegarA()
+    assert.equals(#{}, rolando.artefactos())
+    rolando.encuentraArtefacto(armaduraDeAceroValyrio)
+    assert.equals(#{armaduraDeAceroValyrio}, rolando.artefactos())
+    rolando.encuentraArtefacto(collarDivino)
+    assert.equals(#{armaduraDeAceroValyrio,collarDivino}, rolando.artefactos())
+    rolando.historialDeArtefactos()
+    assert.equals([espadaDelDestino,libroDeHechizos,collarDivino,armaduraDeAceroValyrio,collarDivino], rolando.historialDeArtefactos())
+  }
+}
 
->>>>>>> 3f3624b870e00cabcabb041344d8b8240ce02a23
+// PARTE 2 
+
+
+describe "mensajes con bloque( batalla)" {
+  test "rolando pelea y aumenta su poder " {
+    rolando.valorBase(5)
+    assert.equals(5 , rolando.poderBase())
+    rolando.capacidad(3)
+    assert.equals(3, rolando.capacidadActual())
+    rolando.encuentraArtefacto(espadaDelDestino)
+    assert.equals(#{espadaDelDestino}, rolando.artefactos())
+    rolando.encuentraArtefacto(armaduraDeAceroValyrio)
+    assert.equals(#{espadaDelDestino, armaduraDeAceroValyrio}, rolando.artefactos())
+    rolando.encuentraArtefacto(collarDivino)
+    assert.equals(#{espadaDelDestino, armaduraDeAceroValyrio, collarDivino}, rolando.artefactos())
+    rolando.valorDePeleas()
+    assert.equals(5 +5 + 6 + 3, rolando.valorDePeleas())
+  }
+
+  test "rolando en su segunda batalla" {
+    rolando.valorBase(6)
+    assert.equals(6, rolando.poderBase())
+    rolando.capacidad(3)
+    assert.equals(3, rolando.capacidadActual())
+    rolando.encuentraArtefacto(espadaDelDestino)
+    assert.equals(#{espadaDelDestino}, rolando.artefactos())
+    rolando.encuentraArtefacto(armaduraDeAceroValyrio)
+    assert.equals(#{espadaDelDestino, armaduraDeAceroValyrio}, rolando.artefactos())
+    rolando.encuentraArtefacto(collarDivino)
+    assert.equals(#{espadaDelDestino, armaduraDeAceroValyrio, collarDivino}, rolando.artefactos())
+    rolando.pelear()
+    rolando.valorDePeleas()
+    assert.equals(6 + 3 + 7 + 3, rolando.valorDePeleas())
+  }
+}
