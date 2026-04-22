@@ -1,7 +1,7 @@
 object rolando {
  const artefactos = #{}
  var capacidadMaxima= 2
- var castilloActual = castilloDePiedra
+ var castilloActual = castillo
  const mochila = []
  var valorBase = 5
  method valorBase(_valor) {
@@ -13,7 +13,7 @@ object rolando {
  method capacidadActual() {
    return capacidadMaxima
  }
- method castilloActual(_castillo) {
+ method castillo(_castillo) {
    castilloActual= _castillo  
  }
  method castilloActual() {
@@ -52,15 +52,25 @@ method recolectarArtefacto(artefacto) {
 method poderBase() {
   return valorBase
 }
-method valorDePeleas(){ 
+method valorDePelea(){ 
   return  valorBase + artefactos.sum({poderArtefacto => poderArtefacto.aporteDePoder(self)})
 }
 method pelear() {
-  artefactos.forEach({usadoEnLaBatalla => usadoEnLaBatalla.usarEnBatalla(self)})
-  valorBase = valorBase + 1 
+  self.usarArtefactos()
+  self.actualizarValorBase()
+}
+method actualizarValorBase() {
+  valorBase = valorBase + 1
+}
+
+method usarArtefactos() {
+   artefactos.forEach({usadoEnLaBatalla => usadoEnLaBatalla.usarEnBatalla(self)})
+}
+method artefactosMasPoderosoDeLaMorada() {
+  return castilloActual.artefactoMasPoderoso(self)
 }
 }
-object castilloDePiedra {
+object castillo {
   const inventario = #{}
   method guardarArtefactos(mochila) {
      inventario.addAll(mochila)
@@ -68,8 +78,10 @@ object castilloDePiedra {
   method inventario() {
     return inventario 
   }
+  method artefactoMasPoderoso(personaje) {
+  return inventario.max({artefactoActual => artefactoActual.aporteDePoder(personaje)})
 }
- 
+}
 
   object espadaDelDestino {
   var esUsada = false
@@ -86,19 +98,20 @@ object castilloDePiedra {
     }
   }
 }
-object libroDeHechizos {
-}
 object collarDivino {
   var vecesUsado= 0 
  method aporteDePoder(personaje) {
-    var poder = 3
+    const poder = 3
     if (personaje.poderBase() > 6) {
-      poder = poder + vecesUsado
+     return poder + self.vecesUsado()
     }
-    return poder
+     return poder 
   }
     method usarEnBatalla(personaje) {
       vecesUsado = vecesUsado + 1
+    }
+    method vecesUsado() {
+      return vecesUsado
     }
   }
 
@@ -111,4 +124,44 @@ object armaduraDeAceroValyrio {
     return true 
   }
 
+}
+
+object libroDeHechizos {
+  const hechizos = []
+  method coleccionDeHechizos(hechizo) {
+    hechizos.add(hechizo)
+  }
+  method aporteDePoder(personaje) {
+   if (!hechizos.isEmpty()){
+   return hechizos.first().poderPelea(personaje)
+  } else { 
+    return 0 }
+  }
+  method usarEnBatalla(personaje) {
+    if (!hechizos.isEmpty()){
+      hechizos.remove(hechizos.first())
+    }
+
+  }
+  method listaDeHechizos() {
+    return hechizos
+  }
+}
+
+object bendicion {
+  method poderPelea(personaje){
+    return 4
+  }
+}
+
+object invisibilidad {
+  method poderPelea(personaje) {
+    return personaje.poderBase()
+  }
+}
+
+object invocacion {
+  method poderPelea(personaje) {
+    return personaje.castilloActual().artefactoMasPoderoso(personaje).aporteDePoder(personaje)
+  }
 }
