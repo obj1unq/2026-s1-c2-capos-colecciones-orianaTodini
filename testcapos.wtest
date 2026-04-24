@@ -1,5 +1,7 @@
   import capos.* 
-
+  import enemigos.* 
+  import artefactos.* 
+  
 describe " Rolando Coleccionando artefactos " {
     test " Rolando encuentra un artefacto" { // caso positivo 
         rolando.encuentraArtefacto(espadaDelDestino) 
@@ -149,5 +151,55 @@ describe "rolando con libro de hechizos " {
 
 
   }
+}
+
+describe "rolando pelea con sus enemigos y conquista moradas" {
+  test "rolando pelea con archibaldo y conquista el palacio de marmol y no es poderoso" {
+    assert.equals(5, rolando.poderBase())
+    rolando.capacidad(3)
+    rolando.encuentraArtefacto(espadaDelDestino)
+    assert.equals(#{espadaDelDestino}, rolando.artefactos())
+    rolando.encuentraArtefacto(armaduraDeAceroValyrio)
+    assert.equals(#{espadaDelDestino,armaduraDeAceroValyrio}, rolando.artefactos())
+    rolando.encuentraArtefacto(collarDivino)
+    assert.equals(#{espadaDelDestino,armaduraDeAceroValyrio,collarDivino}, rolando.artefactos())
+    assert.equals(5+5+6+3, rolando.valorDePelea())
+    rolando.enemigosQuePuedeVencerEn(erethia)
+    assert.equals(#{archibaldo,astra}, rolando.enemigosQuePuedeVencerEn(erethia))
+    rolando.moradasQuePuedeConquistar(erethia)
+    assert.equals([palacioDeMarmol,torreDeMarfil], rolando.moradasQuePuedeConquistar(erethia))
+    rolando.esPoderosoEn(erethia)
+    assert.notThat(rolando.esPoderosoEn(erethia))
+  }
+  test "rolando pelea con archibaldo y conquista el palacio de marmol y es poderoso" {
+    rolando.valorBase(10)
+    assert.equals(10, rolando.poderBase())
+    rolando.capacidad(3)
+    rolando.encuentraArtefacto(espadaDelDestino)
+    assert.equals(#{espadaDelDestino}, rolando.artefactos())
+    rolando.encuentraArtefacto(armaduraDeAceroValyrio)
+    assert.equals(#{espadaDelDestino,armaduraDeAceroValyrio}, rolando.artefactos())
+    rolando.encuentraArtefacto(collarDivino)
+    assert.equals(#{espadaDelDestino,armaduraDeAceroValyrio,collarDivino}, rolando.artefactos())
+    assert.equals(10+10+6+3, rolando.valorDePelea())
+    rolando.enemigosQuePuedeVencerEn(erethia)
+    assert.equals(#{caterina, archibaldo, astra}, rolando.enemigosQuePuedeVencerEn(erethia))
+    rolando.moradasQuePuedeConquistar(erethia)
+    assert.equals([fortalezaDeAcero, palacioDeMarmol, torreDeMarfil], rolando.moradasQuePuedeConquistar(erethia))
+    rolando.esPoderosoEn(erethia)
+    assert.that(rolando.esPoderosoEn(erethia))
+}
+test "Rolando tiene un artefacto fatal para astra pero no para caterina "{
+  rolando.valorBase(15)
+  assert.equals(15, rolando.poderBase())
+  rolando.capacidad(2)
+  rolando.encuentraArtefacto(espadaDelDestino)
+  assert.equals(#{espadaDelDestino}, rolando.artefactos())
+  rolando.tieneArtefactoFatalPara(astra)
+  assert.that(rolando.tieneArtefactoFatalPara(astra))
+  rolando.tieneArtefactoFatalPara(caterina)
+  assert.notThat(rolando.tieneArtefactoFatalPara(caterina))
+
+}
 }
  
