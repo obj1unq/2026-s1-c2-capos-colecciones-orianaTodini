@@ -194,11 +194,10 @@ test "Rolando tiene un artefacto fatal para astra pero no para caterina "{
   assert.equals(15, rolando.poderBase())
   rolando.capacidad(2)
   rolando.encuentraArtefacto(espadaDelDestino)
-  assert.equals(#{espadaDelDestino}, rolando.artefactos())
-  rolando.tieneArtefactoFatalPara(astra)
   assert.that(rolando.tieneArtefactoFatalPara(astra))
-  rolando.tieneArtefactoFatalPara(caterina)
+  assert.equals(espadaDelDestino, rolando.artefactoMasLetalPara(astra))
   assert.notThat(rolando.tieneArtefactoFatalPara(caterina))
+  assert.throwsException({ rolando.artefactoMasLetalPara(caterina) })
 
 }
 }

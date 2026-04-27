@@ -83,13 +83,13 @@ method esPoderosoEn(tierra) {
   return self.enemigosQuePuedeVencerEn(tierra).size() == 3
 }
 method tieneArtefactoFatalPara(enemigo) {
-  return artefactos.any { artefacto =>
-    self.poderCon(artefacto) > enemigo.aporteDePelea()
-  }
+  return artefactos.any { artefacto => self.esLetal(artefacto,enemigo)}
 }
-
-method poderCon(artefacto) {
-  return artefacto.aporteDePoder(self)
+method artefactoMasLetalPara(enemigo) {
+  return artefactos.find({artefacto => self.esLetal(artefacto,enemigo)})
+}
+method esLetal(artefacto,enemigo) {
+  return artefacto.aporteDePoder(self) > enemigo.aporteDePelea()
 }
 }
 object castillo {
