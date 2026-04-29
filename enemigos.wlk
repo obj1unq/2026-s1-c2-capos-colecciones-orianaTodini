@@ -7,42 +7,48 @@ object erethia {
     method enemigos() {
       return enemigos
     }
+      method enemigosQuePuedeVencer(personaje){
+      return enemigos.filter({enemigo => enemigo.aporteDePoder() < personaje.valorDePelea()})
+    }
+    method puedeVencerATodos(personaje){
+      return enemigos.all({enemigo => personaje.valorDePelea() > enemigo.aporteDePoder()})
 }
+    }
+
 object caterina{
-    method aporteDePelea() {
+    method aporteDePoder() {
       return 28 
     }
     method morada(){
         return fortalezaDeAcero 
     }
     method puedeSerVencidoPor(personaje) {
-    return self.aporteDePelea() < personaje.valorDePelea()
-  
+    return self.aporteDePoder() < personaje.valorDePelea()
   }
 }
 
 
 object archibaldo{ 
-    method aporteDePelea() {
+    method aporteDePoder() {
       return 16 
     }
     method morada(){
         return palacioDeMarmol
     }
     method puedeSerVencidoPor(personaje) {
-    return self.aporteDePelea() < personaje.valorDePelea()                 
+    return self.aporteDePoder() < personaje.valorDePelea()                 
   }
 
 }
 object astra  {
-  method aporteDePelea() {
+  method aporteDePoder() {
     return 14 
   }
   method morada () {
     return torreDeMarfil
   }
   method puedeSerVencidoPor(personaje) {
-    return self.aporteDePelea() < personaje.valorDePelea()
+    return self.aporteDePoder() < personaje.valorDePelea()
   }
 }
 

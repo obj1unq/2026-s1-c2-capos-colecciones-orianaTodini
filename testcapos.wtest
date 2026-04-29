@@ -12,16 +12,16 @@ describe " Rolando Coleccionando artefactos " {
         // assert.equals(2, rolando.tamañoMochila())
         assert.equals(#{espadaDelDestino, libroDeHechizos},rolando.artefactos())
         // assert.that(rolando.artefactos().contains(espadaDelDestino))
-        assert.throwsException({ rolando.encuentraArtefacto(collarDivino) })
+        rolando.encuentraArtefacto(collarDivino) 
+        assert.equals(#{espadaDelDestino, libroDeHechizos},rolando.artefactos())
     }
-    }
+}
 
     test "Rolando no recolecta un artefacto  " { // caso negativo
         rolando.capacidad(0)
-        assert.throwsException({ rolando.encuentraArtefacto(espadaDelDestino) })
+        rolando.encuentraArtefacto(espadaDelDestino)
+        assert.equals(#{}, rolando.artefactos())
     }
-
-
     /* si el metodo no hace nada en vez de tirar error 
      test "Rolando no recolecta un artefacto  " { caso negativo
         rolando.capacidad(0)
@@ -35,12 +35,12 @@ describe "castillo de piedra " {
     assert.equals(#{espadaDelDestino, libroDeHechizos}, rolando.artefactos())
     rolando.castillo(castillo)
     assert.equals(castillo, rolando.castilloActual())
-    rolando.llegarA()
+    rolando.llegarAHogar()
     assert.equals(#{espadaDelDestino,libroDeHechizos}, castillo.inventario())
     assert.equals(#{},rolando.artefactos())
     rolando.encuentraArtefacto(collarDivino)
     assert.equals(#{collarDivino}, rolando.artefactos())
-    rolando.llegarA()
+    rolando.llegarAHogar()
     assert.equals(#{espadaDelDestino,libroDeHechizos,collarDivino}, castillo.inventario())
   }
   test "saber historial de los encuentros de los artefactos"{
@@ -49,9 +49,10 @@ describe "castillo de piedra " {
     assert.equals(#{espadaDelDestino}, rolando.artefactos())
     rolando.encuentraArtefacto(libroDeHechizos)
     assert.equals(#{espadaDelDestino, libroDeHechizos}, rolando.artefactos())
-    assert.throwsException({ rolando.encuentraArtefacto(collarDivino) })
+     rolando.encuentraArtefacto(collarDivino)
+    assert.equals(#{espadaDelDestino, libroDeHechizos}, rolando.artefactos())
     rolando.castillo(castillo)
-    rolando.llegarA()
+    rolando.llegarAHogar()
     assert.equals(#{}, rolando.artefactos())
     rolando.encuentraArtefacto(armaduraDeAceroValyrio)
     assert.equals(#{armaduraDeAceroValyrio}, rolando.artefactos())
@@ -82,7 +83,7 @@ describe "mensajes con bloque( batalla)" {
     assert.equals(5 + 5 + 6 + 3, rolando.valorDePelea())
     rolando.pelear()
     assert.equals(6, rolando.poderBase())
-    rolando.llegarA()
+    rolando.llegarAHogar()
     assert.equals(6, rolando.poderBase())
     assert.equals(3, rolando.capacidadActual())
     rolando.encuentraArtefacto(espadaDelDestino)
@@ -94,7 +95,7 @@ describe "mensajes con bloque( batalla)" {
     rolando.valorDePelea()
     assert.equals(6 + 3 + 6 + 3, rolando.valorDePelea())
     rolando.pelear()
-    rolando.llegarA()
+    rolando.llegarAHogar()
     assert.equals(7, rolando.poderBase())
     assert.equals(3, rolando.capacidadActual())
     rolando.encuentraArtefacto(espadaDelDestino)
@@ -106,7 +107,7 @@ describe "mensajes con bloque( batalla)" {
     rolando.valorDePelea()
     assert.equals(7 + 3.5 + 6 + 5, rolando.valorDePelea())
     rolando.pelear()
-    rolando.llegarA()
+    rolando.llegarAHogar()
     assert.equals(8, rolando.poderBase())
     assert.equals(3, rolando.capacidadActual())
     rolando.encuentraArtefacto(espadaDelDestino)
@@ -131,13 +132,10 @@ describe "rolando con libro de hechizos " {
     rolando.encuentraArtefacto(espadaDelDestino)
     rolando.encuentraArtefacto(armaduraDeAceroValyrio)
     rolando.encuentraArtefacto(collarDivino)
-    rolando.llegarA()
+    rolando.llegarAHogar()
     assert.equals(#{espadaDelDestino,armaduraDeAceroValyrio,collarDivino}, castillo.inventario())
     rolando.encuentraArtefacto(libroDeHechizos)
     assert.equals(#{libroDeHechizos}, rolando.artefactos())
-    libroDeHechizos.coleccionDeHechizos(bendicion)
-    libroDeHechizos.coleccionDeHechizos(invisibilidad)
-    libroDeHechizos.coleccionDeHechizos(invocacion)
     assert.equals([bendicion,invisibilidad,invocacion], libroDeHechizos.listaDeHechizos())
     assert.equals(4, libroDeHechizos.aporteDePoder(rolando))
     rolando.pelear()

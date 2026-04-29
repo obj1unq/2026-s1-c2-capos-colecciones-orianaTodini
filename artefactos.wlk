@@ -21,17 +21,19 @@ object espadaDelDestino {
 object collarDivino {
   var vecesUsado= 0 
  method aporteDePoder(personaje) {
-    const poder = 3
-    if (personaje.poderBase() > 6) {
-     return poder + self.vecesUsado()
+   if (personaje.poderBase() > 6) {
+      return self.poder() + self.vecesUsado()
     }
-     return poder 
+      return self.poder() 
   }
     method usarEnBatalla(personaje) {
       vecesUsado = vecesUsado + 1
     }
     method vecesUsado() {
       return vecesUsado
+    }
+    method poder(){
+      return 3
     }
   }
 
@@ -41,13 +43,13 @@ object armaduraDeAceroValyrio {
     return  6 
   }
   method usarEnBatalla(personaje) {
-    return true 
+    // no hace nada porque no se gasta 
   }
 
 }
 
 object libroDeHechizos {
-  const hechizos = []
+  const hechizos = [bendicion,invisibilidad,invocacion] // Los hechizos están ordenados y se utilizan en ese orden. Por esta oracion se da a entender que los hechizos ya estan inicializados?
   method coleccionDeHechizos(hechizo) {
     hechizos.add(hechizo)
   }
@@ -82,6 +84,6 @@ object invisibilidad {
 
 object invocacion {
   method poderPelea(personaje) {
-    return personaje.castilloActual().artefactoMasPoderoso(personaje).aporteDePoder(personaje)
+    return personaje.poderDeArtefactoMasPoderoso(personaje)
   }
-}
+  }
